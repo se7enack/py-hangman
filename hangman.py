@@ -48,7 +48,7 @@ def start():
     print("\n" + blank)
     guesses()
     print(loser())
-    print("\nYou have lost. The word was '" + wordtoguess + "'\n")
+    print("\nYou have lost. The word was '" + wordtoguess + "'.\n")
 
 
 def guesses():
