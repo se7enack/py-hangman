@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import random
+import animations as ani
 
 
 def rand(file):
@@ -8,7 +9,7 @@ def rand(file):
     myline = random.choice(lines)
     return (myline)
 
-
+ani.man.reverse()
 wordlist = "./wordlist"
 wordtoguess = rand(wordlist)
 wordlength = len(wordtoguess)
@@ -17,42 +18,22 @@ guess = " "
 
 blank = str('#' * wordlength)
 b = list(blank)
-tries = 15
-
-
-def loser():
-    lose = """
-    __   _______ _   _   _     _____ _____ _____ _ 
-    \ \ / /  _  | | | | | |   |  _  /  ___|  ___| |
-     \ V /| | | | | | | | |   | | | \ `--.| |__ | |
-      \ / | | | | | | | | |   | | | |`--. \  __|| |
-      | | \ \_/ / |_| | | |___\ \_/ /\__/ / |___|_|
-      \_/  \___/ \___/  \_____/\___/\____/\____/(_)\n\n"""
-    return lose
-
-                                        
-def winner():
-    win = """
-    __   _______ _   _   _    _ _____ _   _ _      
-    \ \ / /  _  | | | | | |  | |_   _| \ | | |     
-     \ V /| | | | | | | | |  | | | | |  \| | |     
-      \ / | | | | | | | | |/\| | | | | . ` | |     
-      | | \ \_/ / |_| | \  /\  /_| |_| |\  |_|     
-      \_/  \___/ \___/   \/  \/ \___/\_| \_(_)\n\n"""
-    return win     
-
+tries = 7
 
 
 def start():
-    print(title())
+    print(ani.title())
+    print(ani.man[7])
     print("\n" + blank)
     guesses()
-    print(loser())
+    print(ani.loser())
+    print(ani.man[0])
     print("\nYou have lost. The word was '" + wordtoguess + "'.\n")
 
 
 def guesses():
     global guess
+    global tries
     try:
         guess = input('\nType a letter: ')[0].lower()
     except:
@@ -61,37 +42,25 @@ def guesses():
         print(wordtoguess)
         guesses()
     elif guess in wordtoguess:
+        print(ani.man[tries])
+        print("\nCorrect, '" + guess + "' is a letter in this word!\n")
         index = s.index(guess)
-        # print('The index of ' + guess + " is", index)
         b[index] = guess
         print("".join(b))
         if s == b:
-            print(winner())
+            print(ani.winner())
             print("\nYou guessed '" + wordtoguess + "' correctly!\n")
             exit(0)
         else:
             guesses()
     else:
-        global tries
         while tries > 1:
             tries -= 1
+            print(ani.man[tries])
             print("\nIncorrect. Try Again")
             print("\nYou have " + str(tries) + " left!")
             print("".join(b))
             guesses()
-
-
-def title():
-    s = """ 
-     _   _                                         
-    | | | |                                        
-    | |_| | __ _ _ __   __ _ _ __ ___   __ _ _ __  
-    |  _  |/ _` | '_ \ / _` | '_ ` _ \ / _` | '_ \ 
-    | | | | (_| | | | | (_| | | | | | | (_| | | | |
-    \_| |_/\__,_|_| |_|\__, |_| |_| |_|\__,_|_| |_|
-                        __/ |                      
-                       |___/"""
-    return s                             
 
 
 start()
